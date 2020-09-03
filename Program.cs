@@ -1,28 +1,57 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace npoeicr.List_Value_Types
+namespace CreateStruct
 {
-  class Program
-  {
-
-    static void Main(string[] args)
+    class Program
     {
-      SByte a = 0; 
-      Byte b = 0; 
-      Int16 c = 0; 
-      Int32 d = 0; 
-      Int64 e = 0; 
-      string s = "";
-      Exception ex = new Exception();
-      object[] types = { a, b, c, d, e, s, ex };
-      foreach (object o in types)
+        static void Main(string[] args)
+        {
+            Person p = new Person("Tony", "Allen", 32, Person.Genders.Male);
+            Console.WriteLine(p.ToString());
+
+            Manager m = new Manager("Tony", "Allen", 32, Manager.Genders.Male, "555-555-1212", "123b");
+            Console.WriteLine(m);
+        }
+
+        class Person
+        {
+            public string firstName;
+            public string lastName;
+            public int age;
+            public Genders gender;
+
+            public Person(string _firstName, string _lastName, int _age, Genders _gender)
+            {
+                firstName = _firstName;
+                lastName = _lastName;
+                age = _age;
+                gender = _gender;
+            }
+
+            public override string ToString()
+            {
+                return firstName + " " + lastName + " (" + gender + "), age " + age;
+            }
+
+            public enum Genders : int { Male, Female };
+        }
+        class Manager : Person
+        {
+            string phoneNumber;
+            string officeLocation;
+
+        public Manager(string _firstName, string _lastName, int _age, Genders _gender, string
+         _phoneNumber, string _officeLocation) : base(_firstName, _lastName, _age, _gender)
+        {
+        phoneNumber = _phoneNumber; officeLocation = _officeLocation;
+        }
+
+      public override string ToString()
       {
-        string type;
-        if (o.GetType().IsValueType) type = "Value type";
-        else
-          type = "Reference Type";
-        Console.WriteLine("{0}: {1}", o.GetType(), type);
+        return base.ToString() + ", " + phoneNumber + ", " + officeLocation;
       }
     }
-  }
+    }
 }
